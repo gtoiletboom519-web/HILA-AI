@@ -1,18 +1,16 @@
 {
-  "name": "hila-ai-gemini",
+  "name": "nva-ai-gemini-server",
   "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "description": "A small Express backend proxy for the Gemini API",
+  "main": "server.js",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "node server.js"
   },
   "engines": {
     "node": ">=18"
   },
   "dependencies": {
-    "@google/genai": "^1.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
     "express": "^4.21.2"
   }
 }

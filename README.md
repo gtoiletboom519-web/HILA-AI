@@ -1,25 +1,39 @@
-# HILA AI (Gemini) — Render deployment
+# Nva AI Gemini Server
 
-## Files
-- `index.html` — chat interface (same styling as supplied design)
-- `server/index.js` — Express backend; Gemini API key stays server-side
-- `package.json` — dependencies and Render start script
-- `.env.example` — local environment template
+A small Node.js/Express backend that keeps your Gemini API key on the server.
 
-## Render setup
-- Create a Web Service from this GitHub repository.
-- Build Command: `npm install`
-- Start Command: `npm start`
-- In Environment, add `GEMINI_API_KEY` (your key from Google AI Studio).
-- Optional: set `GEMINI_MODEL` to `gemini-2.5-flash` or another model enabled for your key.
-- Do not add `PORT`; Render supplies it.
+## Deploy on Render
 
-The frontend and backend are served by the same web service. The frontend uses `/api/chat`, not `localhost`.
+1. Upload these files to a GitHub repository.
+2. In Render, create **New + → Web Service** and connect the repository.
+3. Set **Build Command** to `npm install`.
+4. Set **Start Command** to `npm start`.
+5. Add an Environment Variable named `GEMINI_API_KEY` and paste your Gemini API key as its value.
+6. Deploy. Render supplies the `PORT` environment variable automatically.
 
-## Local setup
-1. Copy `.env.example` to `.env` and add your key.
-2. Run `npm install`
-3. Run `npm start`
-4. Visit `http://localhost:3001`
+## API
 
-Never commit `.env` or expose the API key in frontend files.
+- `GET /` — server status.
+- `POST /api/chat` — send a message.
+
+Example request:
+
+```json
+{
+  "message": "Hello, introduce yourself."
+}
+```
+
+Example browser JavaScript:
+
+```js
+const response = await fetch('https://YOUR-SERVICE.onrender.com/api/chat', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ message: 'Hello!' })
+});
+const data = await response.json();
+console.log(data.answer);
+```
+
+Keep the API key in Render Environment Variables. Do not put it in your HTML, GitHub repository, or APK.
