@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050811">
+  <title>HILA AI</title>
+  <style>
+    :root{color-scheme:dark;--bg:#050811;--panel:#091321;--line:#1a304e;--blue:#258bff;--text:#eaf2ff;--muted:#8299b8}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 55% 5%,#10264a 0,#080f1e 42%,var(--bg) 78%);color:var(--text);font-family:Arial,"Noto Sans Arabic",sans-serif}
+    .layout{min-height:100vh;display:flex}.side{width:260px;padding:24px 18px;background:#060b16ef;border-left:1px solid var(--line);display:flex;flex-direction:column}
+    .brand{display:flex;align-items:center;gap:12px;margin-bottom:32px}.logo{width:44px;height:44px;border:1px solid var(--blue);border-radius:14px;display:grid;place-items:center;color:#75bcff;background:#0b2140;box-shadow:0 0 24px #087bff45;font-size:22px;font-weight:bold}.brand strong{font:800 20px Arial;letter-spacing:1px}.brand strong span{color:var(--blue)}.sub{font:9px Arial;letter-spacing:1px;color:#6c86a8;margin-top:5px}
+    button{cursor:pointer;font:inherit}.new{padding:13px;border:1px solid #176bd2;border-radius:11px;background:linear-gradient(100deg,#0d3b78,#0b2350);color:white}.side-label{color:#6f88a9;font-size:12px;margin:28px 8px 12px}.side-item{padding:12px;color:#a9bfdc;border-radius:9px;background:#10213b;border:1px solid #1b3c64;font-size:13px}.engine{margin-top:auto;border:1px solid var(--line);border-radius:12px;padding:13px;color:#b8cce5;font-size:12px}.engine small{display:block;color:#6f88a9;margin-top:5px}
+    main{flex:1;min-width:0;display:flex;flex-direction:column}.top{height:66px;border-bottom:1px solid #14243a;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#060c18aa}.pill{font-size:11px;color:#9bb3d2;border:1px solid var(--line);background:#0b1729;padding:8px 12px;border-radius:22px}.ready{font:10px Arial;letter-spacing:1px;color:#6c91ba}.ready i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#35e6ae;box-shadow:0 0 9px #35e6ae;margin-left:8px}
+    .content{width:min(850px,100%);margin:auto;padding:28px 24px;flex:1;display:flex;flex-direction:column}.welcome{text-align:center;margin:auto auto 30px}.orb{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;margin:0 auto 20px;color:#8ac8ff;font-size:34px;background:radial-gradient(circle,#164e92,#0b2142 58%,#071326);border:1px solid #1b69bc;box-shadow:0 0 32px #087bff55}.eyebrow{font:10px Arial;letter-spacing:2px;color:#6c91ba}.welcome h1{font-size:clamp(27px,4vw,40px);margin:14px 0 8px}.welcome h1 span{color:#369aff;text-shadow:0 0 20px #087bff70}.welcome p{color:var(--muted);font-size:14px}.suggestions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}.suggestions button{background:#0b1728;border:1px solid var(--line);color:#c8dcf5;padding:11px 14px;border-radius:10px;font-size:12px}.suggestions button:hover{border-color:var(--blue)}
+    #messages{display:flex;flex-direction:column;gap:16px}.msg{max-width:88%;padding:12px 16px;border:1px solid var(--line);border-radius:14px;white-space:pre-wrap;line-height:1.8;font-size:14px}.user{align-self:flex-start;background:#102b4d;border-color:#1d5a96}.assistant{align-self:flex-end;background:#0b1728}.error{color:#ffaaaa;background:#32151d;border-color:#6d2935}
+    .composer-wrap{width:min(820px,calc(100% - 36px));margin:0 auto;padding:10px 0 18px}.composer{display:flex;gap:10px;align-items:flex-end;padding:10px;border:1px solid #244264;border-radius:15px;background:#0a1423}.composer:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px #087bff15}.composer textarea{flex:1;resize:vertical;min-height:28px;max-height:130px;background:transparent;border:0;outline:0;color:white;font:14px Arial;padding:7px}.composer textarea::placeholder{color:#617a9b}.send{width:40px;height:40px;border:0;border-radius:11px;background:linear-gradient(145deg,#238eff,#0754bb);color:white;font-size:18px}.send:disabled{opacity:.4}.hint{text-align:center;color:#526984;font-size:10px;margin-top:9px}
+    @media(max-width:700px){.side{display:none}.top{padding:0 15px}.content{padding:20px 14px}.welcome{margin-top:35px}.suggestions{display:grid;grid-template-columns:1fr;width:min(360px,100%);margin-inline:auto}.suggestions button{text-align:right}.msg{max-width:96%}}
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="side">
+    <div class="brand"><div class="logo">H</div><div><strong>HILA <span>AI</span></strong><div class="sub">YOUR AI COMPANION</div></div></div>
+    <button class="new" id="newChat">＋ محادثة جديدة</button>
+    <div class="side-label">مساحة العمل</div>
+    <div class="side-item">✧ المحادثة الحالية</div>
+    <div class="engine"><b>HILA CORE</b><small>Powered by Gemini</small></div>
+  </aside>
+  <main>
+    <header class="top"><span class="pill">● HILA Assistant</span><span class="ready"><i></i>SYSTEM READY</span></header>
+    <section class="content">
+      <div class="welcome" id="welcome">
+        <div class="orb">✧</div>
+        <div class="eyebrow">YOUR AI COMPANION</div>
+        <h1>فكّر أبعد مع <span>HILA AI</span></h1>
+        <p>ذكاء يساعدك تفهم، تبدع، وتنجز.</p>
+        <div class="suggestions">
+          <button data-prompt="عاونّي نتعلم البرمجة من الصفر">⌘ تعلّم البرمجة</button>
+          <button data-prompt="اشرح لي الذكاء الاصطناعي بطريقة بسيطة">✧ اكتشف الذكاء الاصطناعي</button>
+          <button data-prompt="ساعدني نخطط لمشروع جديد">↗ خطّط لمشروع</button>
+        </div>
+      </div>
+      <div id="messages" aria-live="polite"></div>
+    </section>
+    <footer class="composer-wrap">
+      <form class="composer" id="form">
+        <textarea id="prompt" rows="1" placeholder="اكتب رسالتك إلى HILA AI..." required></textarea>
+        <button class="send" id="send" type="submit" aria-label="إرسال">➤</button>
+      </form>
+      <div class="hint">قد يخطئ HILA AI أحياناً. تحقّق من المعلومات المهمة.</div>
+    </footer>
+  </main>
+</div>
+<script>
+  const API_URL = "/api/chat";
+  const messages = [];
+  const box = document.getElementById("messages");
+  const input = document.getElementById("prompt");
+  const sendButton = document.getElementById("send");
+  const welcome = document.getElementById("welcome");
+
+  function addMessage(role, content, extraClass = "") {
+    const el = document.createElement("div");
+    el.className = `msg ${role} ${extraClass}`;
+    el.textContent = content;
+    box.appendChild(el);
+    el.scrollIntoView({ behavior: "smooth", block: "end" });
+    return el;
+  }
+
+  async function sendMessage(text) {
+    const value = text.trim();
+    if (!value || sendButton.disabled) return;
+    welcome.style.display = "none";
+    addMessage("user", value);
+    messages.push({ role: "user", content: value });
+    input.value = "";
+    sendButton.disabled = true;
+    const loading = addMessage("assistant", "HILA AI تفكّر...");
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: messages.slice(-30) })
+      });
+      const raw = await response.text();
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        throw new Error(`رد الخادم غير صالح (HTTP ${response.status}).`);
+      }
+      if (!response.ok) throw new Error(data.error || `خطأ HTTP ${response.status}`);
+      const reply = data.reply || "لم يصل رد.";
+      loading.textContent = reply;
+      messages.push({ role: "assistant", content: reply });
+    } catch (err) {
+      loading.className = "msg error";
+      loading.textContent = "ما قدرناش نتصلو بالخادم: " + err.message + "\nتأكد من إعداد Gemini API في Render.";
+    } finally {
+      sendButton.disabled = false;
+      input.focus();
+    }
+  }
+
+  document.getElementById("form").addEventListener("submit", e => {
+    e.preventDefault();
+    sendMessage(input.value);
+  });
+  document.getElementById("newChat").addEventListener("click", () => {
+    messages.length = 0;
+    box.replaceChildren();
+    welcome.style.display = "";
+    input.value = "";
+  });
+  document.querySelectorAll("[data-prompt]").forEach(btn =>
+    btn.addEventListener("click", () => sendMessage(btn.dataset.prompt))
+  );
+</script>
+</body>
+</html>
